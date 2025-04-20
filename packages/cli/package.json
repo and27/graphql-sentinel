@@ -1,17 +1,32 @@
 {
-  "name": "cli",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "@graphql-sentinel/cli",
+  "version": "0.1.0",
+  "description": "CLI tool for GraphQL Sentinel",
+  "bin": {
+    "sentinel-cli": "dist/index.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
+    "build": "tsc",
+    "dev": "npm run build &&  node packages/cli/dist/index.js",
+    "start": "node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@graphql-sentinel/scanner-engine": "file:../scanner-engine",
+    "commander": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/commander": "^2.12.2",
+    "@types/node": "^18.0.0",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/commander": "^2.12.5",
-    "@types/node": "^22.14.1",
-    "typescript": "^5.8.3"
-  }
+  "license": "ISC"
 }

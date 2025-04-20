@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { buildSchema, getIntrospectionQuery, IntrospectionQuery, GraphQLError, GraphQLSchema } from 'graphql';
+import { buildClientSchema, getIntrospectionQuery, IntrospectionQuery, GraphQLError, GraphQLSchema } from 'graphql';
 import type { ScanTarget, ScanResult, VulnerabilityFinding } from '@graphql-sentinel/shared-types'; 
 
 const DEFAULT_DEPTH_LIMIT = 7; // Límite de profundidad para testear DoS
@@ -57,7 +57,8 @@ export async function runScan(target: ScanTarget): Promise<ScanResult> {
         findings.push(createFinding('Info', 'Introspection Query con Errores', 'La introspection query devolvió errores, podría indicar problemas en el schema o configuración.'));
       }
       if (response.data.data) {
-        schema = buildSchema(response.data.data as any); // Construye el schema
+          schema = buildClientSchema(response.data.data as IntrospectionQuery); 
+          console.log('[Engine] Schema obtenido y parseado correctamente.');
         console.log('[Engine] Schema obtenido y parseado correctamente.');
          findings.push(createFinding('Info', 'Introspection Habilitada', 'La API permite introspection queries. Considera deshabilitarla en producción si no es necesaria.'));
       } else {

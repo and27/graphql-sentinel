@@ -67,27 +67,27 @@ app.get('/', (req, res) => {
   res.send('GraphQL Sentinel Backend API');
 });
 
-// Endpoint para iniciar un escaneo (ej. llamado por el CLI o UI)
-app.post('/scans', async (req, res) => {
-  const target = req.body as ScanTarget; // ¡Validar input en producción!
-  if (!target || !target.url) {
-    return res.status(400).send({ error: 'Target URL es requerido' });
-  }
+// // Endpoint para iniciar un escaneo (ej. llamado por el CLI o UI)
+// app.post('/scans', async (req, res) => {
+//   const target = req.body as ScanTarget; // ¡Validar input en producción!
+//   if (!target || !target.url) {
+//     return res.status(400).send({ error: 'Target URL es requerido' });
+//   }
 
-  try {
-    const job = await scanQueue.add(`scan-<span class="math-inline">\{target\.url\}\-</span>{Date.now()}`, target);
-    console.log(`Trabajo añadido a la cola con ID: ${job.id}`);
-    // Guardar estado inicial 'Queued' en DB
-    await pgPool.query(
-      'INSERT INTO scan_results(id, target_url, status) VALUES($1, $2, $3)',
-      [job.id, target.url, 'Queued'] // Usamos el ID del Job como ID del scan
-    );
-    res.status(202).send({ message: 'Escaneo encolado', jobId: job.id });
-  } catch (error) {
-     console.error('Error al encolar trabajo:', error);
-     res.status(500).send({ error: 'Error interno al encolar escaneo' });
-  }
-});
+//   try {
+//     const job = await scanQueue.add(`scan-<span class="math-inline">\{target\.url\}\-</span>{Date.now()}`, target);
+//     console.log(`Trabajo añadido a la cola con ID: ${job.id}`);
+//     // Guardar estado inicial 'Queued' en DB
+//     await pgPool.query(
+//       'INSERT INTO scan_results(id, target_url, status) VALUES($1, $2, $3)',
+//       [job.id, target.url, 'Queued'] // Usamos el ID del Job como ID del scan
+//     );
+//     res.status(202).send({ message: 'Escaneo encolado', jobId: job.id });
+//   } catch (error) {
+//      console.error('Error al encolar trabajo:', error);
+//      res.status(500).send({ error: 'Error interno al encolar escaneo' });
+//   }
+// });
 
 // Endpoint para obtener resultados de un escaneo
 app.get('/scans/:jobId', async (req, res) => {
