@@ -1,0 +1,35 @@
+{
+  "url": "URL_DE_TU_API_GRAPHQL_A_PROBAR",
+  "schema": null,
+  "userContexts": [
+    {
+      "id": "usuarioNormalA",
+      "authToken": "TOKEN_JWT_O_AUTH_DEL_USUARIO_A",
+      "ownedObjectIds": {
+        "Pedido": ["pedido-101", "pedido-102"],
+        "Documento": ["doc-abc"]
+      }
+    },
+    {
+      "id": "usuarioNormalB",
+      "authToken": "TOKEN_JWT_O_AUTH_DEL_USUARIO_B",
+      "ownedObjectIds": {
+        "Pedido": ["pedido-201"],
+        "Documento": ["doc-xyz", "doc-aaa"]
+      }
+    },
+    {
+      "id": "usuarioAdmin",
+      "authToken": "TOKEN_JWT_O_AUTH_DEL_ADMIN",
+      "ownedObjectIds": {}
+    },
+    {
+      "id": "invitadoSinToken",
+      "authToken": "",
+      "ownedObjectIds": {}
+    }
+  ],
+  "bolaConfig": {
+    "targetObjectTypes": ["Pedido", "Documento", "PerfilUsuario"]
+  }
+}
